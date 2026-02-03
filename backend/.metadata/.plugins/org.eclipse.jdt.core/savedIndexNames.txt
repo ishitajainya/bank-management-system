@@ -1,0 +1,2 @@
+INDEX VERSION 1.134+C:\Users\VE00YN350\Desktop\Project\bankApp\backend\.metadata\.plugins\org.eclipse.jdt.core
+1865797976.index
