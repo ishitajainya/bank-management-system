@@ -3,8 +3,11 @@ package com.bank.system.service;
 import com.bank.system.dto.CreateAccountRequest;
 import com.bank.system.dto.CreateAccountResponse;
 import com.bank.system.entity.BankAccount;
+import com.bank.system.exception.BusinessException;
 import com.bank.system.repository.BankAccountRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,21 +23,20 @@ public class AccountServiceImpl implements AccountService {
     @Override
     @Transactional
     public CreateAccountResponse createAccount(CreateAccountRequest request) {
-
         BigDecimal opening = request.getOpeningBalance();
         if (opening.compareTo(BigDecimal.ZERO) < 0) {
-            throw new IllegalArgumentException("Opening balance cannot be negative");
+            throw new BusinessException("Opening balance cannot be negative");
         }
 
         String accountNumber = generateAccountNumber();
 
-        BankAccount account = BankAccount.builder()
-                .accountNumber(accountNumber)
-                .holderName(request.getHolderName())
-                .balance(opening)
-                .build();
-
-        BankAccount saved = bankAccountRepository.save(account);
+        BankAccount saved = bankAccountRepository.save(
+                BankAccount.builder()
+                        .accountNumber(accountNumber)
+                        .holderName(request.getHolderName())
+                        .balance(opening)
+                        .build()
+        );
 
         return CreateAccountResponse.builder()
                 .accountNumber(saved.getAccountNumber())
@@ -43,7 +45,18 @@ public class AccountServiceImpl implements AccountService {
                 .build();
     }
 
+    @Override
+    public Page<CreateAccountResponse> listAccounts(Pageable pageable) {
+        return bankAccountRepository.findAll(pageable)
+                .map(a -> CreateAccountResponse.builder()
+                        .accountNumber(a.getAccountNumber())
+                        .holderName(a.getHolderName())
+                        .balance(a.getBalance())
+                        .build());
+    }
+
     private String generateAccountNumber() {
-        return "YMSLI" + UUID.randomUUID().toString().replace("-", "").substring(0, 8).toUpperCase();
+        return "YMSLI" + UUID.randomUUID().toString().replace("-", "")
+                .substring(0, 8).toUpperCase();
     }
 }
