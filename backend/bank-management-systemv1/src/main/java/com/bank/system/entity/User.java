@@ -26,6 +26,7 @@ public class User {
     @Column(nullable = false)
     private Role role;
 
+    //agr a/c block ho gya
     @Column(nullable = false)
     private boolean enabled = true;
 }

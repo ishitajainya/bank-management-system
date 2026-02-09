@@ -27,7 +27,6 @@ public class AuthController {
                 new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword())
         );
 
-        // role from DB (source of truth)
         User user = userRepository.findByUsername(request.getUsername()).orElseThrow();
         String token = jwtUtil.generateToken(user.getUsername(), user.getRole().name());
 
