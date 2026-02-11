@@ -1,0 +1,93 @@
+<div class="container mt-4">
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <div>
+      <h3 class="mb-0">{{ greeting }}, {{ username }} 👋</h3>
+      <small class="text-muted">Manager Dashboard – Pending approvals & monitoring</small>
+    </div>
+
+    <button class="btn btn-outline-secondary btn-sm" (click)="logout()">Logout</button>
+  </div>
+
+  <div class="alert alert-danger" *ngIf="error">{{ error }}</div>
+  <div class="alert alert-success" *ngIf="success">{{ success }}</div>
+
+  <div class="card p-3">
+    <div class="d-flex justify-content-between align-items-center mb-2">
+      <h5 class="mb-0">Pending Withdrawal Approvals</h5>
+      <span class="text-muted">Total: {{ totalElements }}</span>
+    </div>
+
+    <div *ngIf="isLoading" class="text-muted">Loading…</div>
+
+    <div *ngIf="!isLoading && approvals.length === 0" class="text-muted">
+      No pending approvals 
+    </div>
+
+    <div class="table-responsive" *ngIf="!isLoading && approvals.length > 0">
+      <table class="table table-sm align-middle">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Account</th>
+            <th>Amount</th>
+            <th>Created At</th>
+            <th>Status</th>
+            <th style="width: 220px;">Action</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr *ngFor="let tx of approvals">
+            <td>#{{ tx.id }}</td>
+            <td>{{ tx.accountNumber }}</td>
+            <td>₹{{ tx.amount }}</td>
+            <td>{{ tx.createdAt || tx.createdAtDateTime || '-' }}</td>
+            <td>
+              <span class="badge bg-warning text-dark">{{ tx.status }}</span>
+            </td>
+            <td>
+              <div class="d-flex gap-2">
+                <button
+                  class="btn btn-success btn-sm"
+                  (click)="approve(tx.id)"
+                  [disabled]="actionLoadingId === tx.id"
+                >
+                  {{ actionLoadingId === tx.id ? 'Approving…' : 'Approve' }}
+                </button>
+
+                <button
+                  class="btn btn-danger btn-sm"
+                  (click)="reject(tx.id)"
+                  [disabled]="actionLoadingId === tx.id"
+                >
+                  {{ actionLoadingId === tx.id ? 'Rejecting…' : 'Reject' }}
+                </button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+
+      </table>
+    </div>
+
+    <!-- Pagination -->
+    <div class="d-flex justify-content-between align-items-center mt-2" *ngIf="totalPages > 1">
+      <button class="btn btn-outline-primary btn-sm" (click)="prevPage()" [disabled]="page === 0">
+        Prev
+      </button>
+
+      <span class="text-muted">
+        Page {{ page + 1 }} of {{ totalPages }}
+      </span>
+
+      <button
+        class="btn btn-outline-primary btn-sm"
+        (click)="nextPage()"
+        [disabled]="page + 1 >= totalPages"
+      >
+        Next
+      </button>
+    </div>
+  </div>
+</div>
+

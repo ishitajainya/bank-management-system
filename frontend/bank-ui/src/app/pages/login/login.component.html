@@ -1,0 +1,92 @@
+<div class="auth-shell">
+  <div class="auth-card" role="region" aria-label="Bank App Login">
+
+    <!-- Header -->
+    <div class="auth-header">
+      <div class="brand">
+        <div class="logo" aria-hidden="true">Y</div>
+        <div class="brand-text">
+          <h1>Bank App</h1>
+          <p>Sign in to continue</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Form -->
+    <form
+      class="auth-form"
+      #loginForm="ngForm"
+      (ngSubmit)="login()"
+      novalidate
+    >
+
+      <!-- Username -->
+      <label class="field">
+        <span class="label">Username</span>
+        <input
+          type="text"
+          name="username"
+          [(ngModel)]="username"
+          required
+          autocomplete="username"
+          placeholder="Enter your username"
+        />
+      </label>
+
+      <!-- Password -->
+      <label class="field">
+        <span class="label">Password</span>
+        <div class="password-wrap">
+          <input
+            [type]="showPassword ? 'text' : 'password'"
+            name="password"
+            [(ngModel)]="password"
+            required
+            autocomplete="current-password"
+            placeholder="Enter your password"
+          />
+          <button
+            type="button"
+            class="icon-btn"
+            (click)="showPassword = !showPassword"
+            [attr.aria-label]="showPassword ? 'Hide password' : 'Show password'"
+          >
+            {{ showPassword ? 'Hide' : 'Show' }}
+          </button>
+        </div>
+      </label>
+
+      <!-- Options -->
+      <div class="meta-row">
+        <label class="checkbox">
+          <input type="checkbox" name="remember" [(ngModel)]="remember" />
+          <span>Remember me</span>
+        </label>
+
+        <a class="link" href="#" (click)="$event.preventDefault()">
+          Forgot password?
+        </a>
+      </div>
+
+      <!-- Error -->
+      <p *ngIf="error" class="error-text" role="alert">
+        {{ error }}
+      </p>
+
+      <!-- Submit -->
+      <button
+        class="primary-btn"
+        type="submit"
+        [disabled]="loginForm.invalid || isLoading"
+      >
+        {{ isLoading ? 'Signing in…' : 'Login' }}
+      </button>
+
+      <!-- Footer -->
+      <p class="footnote">
+        By continuing, you agree to our
+        <a class="link" href="#" (click)="$event.preventDefault()">Terms</a>.
+      </p>
+    </form>
+  </div>
+</div>

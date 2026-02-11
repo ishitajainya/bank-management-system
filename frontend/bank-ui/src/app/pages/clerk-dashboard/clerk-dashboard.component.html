@@ -1,0 +1,110 @@
+<div class="page-shell">
+  <!-- Top bar -->
+  <header class="topbar">
+    <div class="topbar-left">
+      <div class="appmark" aria-hidden="true">Y</div>
+      <div>
+        <div class="title">Clerk Dashboard</div>
+        <div class="subtitle">Manage customer transactions</div>
+        <div class="title">{{ greeting }}, {{ username }} 👋</div>
+
+      </div>
+    </div>
+
+    <button class="btn ghost" type="button" (click)="logout()">
+      Logout
+    </button>
+  </header>
+
+  <!-- Main card -->
+  <main class="grid">
+    <section class="card">
+      <div class="card-head">
+        <h2>Transaction</h2>
+        <p>Enter account and amount, then choose an action.</p>
+      </div>
+
+      <form class="form" #txForm="ngForm" novalidate>
+        <!-- Account Number -->
+        <label class="field">
+          <span class="label">Account Number</span>
+          <input
+            type="text"
+            name="accountNumber"
+            [(ngModel)]="accountNumber"
+            required
+            placeholder="e.g. YMSLI70240E49"
+            autocomplete="off"
+          />
+          <span class="hint">Use the exact account ID provided by the customer.</span>
+        </label>
+
+        <!-- Amount -->
+        <label class="field">
+          <span class="label">Amount</span>
+          <div class="amount-wrap">
+            <span class="prefix">₹</span>
+            <input
+              type="number"
+              name="amount"
+              [(ngModel)]="amount"
+              required
+              min="1"
+              step="1"
+              placeholder="0"
+            />
+          </div>
+          <span class="hint">Whole numbers only. Minimum ₹1.</span>
+        </label>
+
+        <!-- Actions -->
+        <div class="actions">
+          <button
+            class="btn primary"
+            type="button"
+            [disabled]="txForm.invalid || isLoading"
+            (click)="deposit()"
+          >
+            {{ isLoading && activeAction === 'deposit' ? 'Processing…' : 'Deposit' }}
+          </button>
+
+          <button
+            class="btn danger"
+            type="button"
+            [disabled]="txForm.invalid || isLoading"
+            (click)="withdraw()"
+          >
+            {{ isLoading && activeAction === 'withdraw' ? 'Processing…' : 'Withdraw' }}
+          </button>
+        </div>
+
+        <!-- Alerts -->
+        <p *ngIf="error" class="alert error" role="alert">{{ error }}</p>
+        <p *ngIf="success" class="alert success" role="status">{{ success }}</p>
+      </form>
+    </section>
+
+    <!-- Right side info card (optional but looks pro) -->
+    <aside class="card subtle">
+      <div class="card-head">
+        <h2>Quick tips</h2>
+        <p>Reduce mistakes during busy hours.</p>
+      </div>
+
+      <ul class="tips">
+        <li>
+          <span class="dot"></span>
+          Verify the account number before submitting.
+        </li>
+        <li>
+          <span class="dot"></span>
+          Confirm amount with the customer out loud.
+        </li>
+        <li>
+          <span class="dot"></span>
+          Withdrawals may fail if balance is insufficient.
+        </li>
+      </ul>
+    </aside>
+  </main>
+</div>

@@ -1,0 +1,130 @@
+:host {
+  display: block;
+  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Apple Color Emoji",
+    "Segoe UI Emoji";
+}
+
+/* Page background */
+.container {
+  max-width: 1200px;
+}
+
+body {
+  background:
+    radial-gradient(1200px 600px at 15% 10%, rgba(59, 130, 246, 0.08), transparent 60%),
+    radial-gradient(900px 500px at 90% 20%, rgba(16, 185, 129, 0.08), transparent 55%),
+    linear-gradient(180deg, #f4f7fb, #eef2f7);
+}
+
+/* Header */
+h3 {
+  font-weight: 700;
+  color: #1f2937;
+}
+
+small.text-muted {
+  color: rgba(31, 41, 55, 0.65) !important;
+}
+
+/* Alerts */
+.alert {
+  border-radius: 12px;
+  font-size: 14px;
+}
+
+.alert-danger {
+  background: rgba(239, 68, 68, 0.08);
+  border-color: rgba(239, 68, 68, 0.2);
+  color: #7f1d1d;
+}
+
+.alert-success {
+  background: rgba(16, 185, 129, 0.08);
+  border-color: rgba(16, 185, 129, 0.2);
+  color: #065f46;
+}
+
+/* Card */
+.card {
+  border-radius: 16px;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  background: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+}
+
+/* Card header row */
+.card h5 {
+  font-weight: 700;
+  color: #1f2937;
+}
+
+/* Table */
+.table {
+  margin-bottom: 0;
+}
+
+.table thead th {
+  font-size: 13px;
+  font-weight: 700;
+  color: rgba(31, 41, 55, 0.75);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.table tbody td {
+  font-size: 14px;
+  color: #1f2937;
+  vertical-align: middle;
+}
+
+.table tbody tr:hover {
+  background: rgba(59, 130, 246, 0.04);
+}
+
+/* Badge */
+.badge.bg-warning {
+  background: rgba(245, 158, 11, 0.15) !important;
+  color: #92400e !important;
+  font-weight: 600;
+}
+
+/* Buttons */
+.btn {
+  border-radius: 10px;
+  font-weight: 600;
+}
+
+.btn-outline-secondary {
+  border-color: rgba(0, 0, 0, 0.2);
+  color: #1f2937;
+}
+
+.btn-outline-secondary:hover {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+/* Approve / Reject */
+.btn-success {
+  background: linear-gradient(135deg, #34d399, #10b981);
+  border: none;
+}
+
+.btn-danger {
+  background: linear-gradient(135deg, #fca5a5, #ef4444);
+  border: none;
+}
+
+/* Pagination */
+.btn-outline-primary {
+  border-radius: 10px;
+  font-weight: 600;
+}
+
+/* Loading / empty states */
+.text-muted {
+  color: rgba(31, 41, 55, 0.6) !important;
+}
+
+/* Spacing polish */
+.table-responsive {
+  margin-top: 8px;
+}
