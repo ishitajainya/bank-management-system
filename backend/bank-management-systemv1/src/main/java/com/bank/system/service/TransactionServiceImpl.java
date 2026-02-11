@@ -75,7 +75,7 @@ public class TransactionServiceImpl implements TransactionService {
         BigDecimal amount = request.getAmount();
         if (amount.compareTo(BigDecimal.ZERO) <= 0) throw new BusinessException("Amount must be > 0");
 
-        // ✅ Do not send to manager if insufficient funds
+      
         if (account.getBalance().compareTo(amount) < 0) {
             throw new BusinessException("Insufficient balance");
         }

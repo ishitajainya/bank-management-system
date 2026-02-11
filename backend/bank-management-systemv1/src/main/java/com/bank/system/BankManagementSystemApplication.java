@@ -14,11 +14,11 @@ public class BankManagementSystemApplication {
     }
 
     // temp
-    @Bean
-    CommandLineRunner printHash() {
-        return args -> {
-            BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-            System.out.println("BCrypt hash: " + encoder.encode("Password@123"));
-        };
-    }
+//    @Bean
+//    CommandLineRunner printHash() {
+//        return args -> {
+//            BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+//            System.out.println("BCrypt hash: " + encoder.encode("Password@123"));
+//        };
+//    }
 }
