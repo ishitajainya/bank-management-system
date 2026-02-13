@@ -1,0 +1,344 @@
+/* Global */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* ✅ Add the shared shell background to match dashboard */
+.page-shell {
+  min-height: 100vh;
+  padding: 22px;
+  background:
+    radial-gradient(1200px 650px at 15% 10%, rgba(59, 130, 246, 0.08), transparent 60%),
+    radial-gradient(900px 520px at 90% 20%, rgba(16, 185, 129, 0.07), transparent 55%),
+    linear-gradient(180deg, #f6f8fb, #eef2f7);
+  color: #111827;
+}
+
+/* Page card container (same width rules as before) */
+.page {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 18px;
+
+  font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  color: #111827;
+}
+
+.page h2 {
+  margin: 0 0 14px;
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: 0.1px;
+}
+
+/* ==========================================
+   Toolbar
+========================================== */
+.toolbar {
+  display: grid;
+  grid-template-columns: 1fr 220px 160px;
+  gap: 12px;
+
+  padding: 14px;
+  border: 1px solid rgba(17, 24, 39, 0.10);
+  border-radius: 12px;
+  background: rgba(255,255,255,0.92);
+  box-shadow: 0 10px 26px rgba(17, 24, 39, 0.08);
+
+  align-items: stretch;
+  margin-bottom: 12px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+}
+
+.field label {
+  display: block;
+  margin: 0 0 6px;
+  font-size: 12px;
+  font-weight: 600;
+  color: rgba(17, 24, 39, 0.78);
+}
+
+.field input,
+.field select {
+  width: 100%;
+  height: 44px;
+  min-height: 44px;
+
+  padding: 0 12px;
+  border-radius: 10px;
+  border: 1px solid rgba(17, 24, 39, 0.16);
+  background: #fff;
+
+  font-size: 14px;
+  line-height: 44px;
+  outline: none;
+
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.field input::placeholder {
+  color: rgba(17, 24, 39, 0.38);
+}
+
+.field input:focus,
+.field select:focus {
+  border-color: rgba(37, 99, 235, 0.55);
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.14);
+}
+
+.field .hint {
+  margin-top: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #b00020;
+  min-height: 16px;
+}
+
+.toolbar button {
+  width: 160px;
+  height: 44px;
+  min-height: 44px;
+
+  border: 1px solid #111827;
+  border-radius: 10px;
+  background: #111827;
+  color: #fff;
+
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 44px;
+
+  padding: 0 14px;
+  cursor: pointer;
+
+  transition: opacity 0.15s ease, transform 0.05s ease;
+
+  align-self: start;
+  margin-top: 22px;
+}
+
+.toolbar button:hover {
+  opacity: 0.92;
+}
+
+.toolbar button:active {
+  transform: translateY(1px);
+}
+
+.toolbar button:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+/* ==========================================
+   Status row
+========================================== */
+.status {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  min-height: 22px;
+  margin: 8px 2px 12px;
+  font-size: 13px;
+  color: rgba(17, 24, 39, 0.75);
+}
+
+.status .error {
+  color: #b00020;
+  font-weight: 600;
+}
+
+/* ==========================================
+   Table / Empty state container
+========================================== */
+.tableWrap {
+  border: 1px solid rgba(17, 24, 39, 0.10);
+  border-radius: 12px;
+  background: rgba(255,255,255,0.92);
+  overflow: hidden;
+  box-shadow: 0 10px 26px rgba(17, 24, 39, 0.08);
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+thead th {
+  text-align: left;
+  padding: 12px 14px;
+  background: #f9fafb;
+  color: #111827;
+  font-weight: 700;
+  border-bottom: 1px solid rgba(17, 24, 39, 0.08);
+  white-space: nowrap;
+}
+
+tbody td {
+  padding: 12px 14px;
+  border-bottom: 1px solid rgba(17, 24, 39, 0.06);
+  color: rgba(17, 24, 39, 0.92);
+  vertical-align: middle;
+}
+
+tbody tr:hover {
+  background: #fbfcfe;
+}
+
+.right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.empty {
+  padding: 18px;
+  text-align: center;
+  color: rgba(17, 24, 39, 0.60);
+}
+
+/* ==========================================
+   Status pill
+========================================== */
+.pill {
+  height: 32px;
+  min-width: 140px;
+  justify-content: center;
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+
+  border: 1px solid rgba(17, 24, 39, 0.18);
+  color: rgba(17, 24, 39, 0.82);
+  background: #fff;
+}
+
+.pill::before {
+  content: "";
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: #9ca3af;
+  display: inline-block;
+}
+
+.pill.ok {
+  border-color: rgba(22, 163, 74, 0.55);
+  color: #166534;
+  background: rgba(22, 163, 74, 0.08);
+}
+.pill.ok::before { background: #16a34a; }
+
+.pill.warn {
+  border-color: rgba(180, 83, 9, 0.55);
+  color: #92400e;
+  background: rgba(180, 83, 9, 0.08);
+}
+.pill.warn::before { background: #b45309; }
+
+.pill.bad {
+  border-color: rgba(220, 38, 38, 0.55);
+  color: #7f1d1d;
+  background: rgba(220, 38, 38, 0.08);
+}
+.pill.bad::before { background: #dc2626; }
+
+/* ==========================================
+   Pager
+========================================== */
+.pager {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+
+  margin-top: 12px;
+  padding: 12px 14px;
+
+  border: 1px solid rgba(17, 24, 39, 0.10);
+  border-radius: 12px;
+  background: rgba(255,255,255,0.92);
+  box-shadow: 0 10px 26px rgba(17, 24, 39, 0.08);
+}
+
+.pager span {
+  font-size: 13px;
+  color: rgba(17, 24, 39, 0.78);
+  font-weight: 600;
+}
+
+.pager button {
+  height: 42px;
+  padding: 0 12px;
+  border-radius: 10px;
+
+  border: 1px solid rgba(17, 24, 39, 0.14);
+  background: #fff;
+
+  font-weight: 600;
+  color: #111827;
+  cursor: pointer;
+
+  transition: background 0.15s ease, opacity 0.15s ease, transform 0.05s ease;
+}
+
+.pager button:hover {
+  background: #f9fafb;
+}
+
+.pager button:active {
+  transform: translateY(1px);
+}
+
+.pager button:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+/* ==========================================
+   Responsive
+========================================== */
+@media (max-width: 860px) {
+  .toolbar {
+    grid-template-columns: 1fr;
+  }
+
+  .toolbar button {
+    width: 100%;
+    margin-top: 0;
+    align-self: stretch;
+  }
+
+  .pager {
+    flex-direction: column;
+    align-items: stretch;
+    text-align: center;
+  }
+
+  .pager button {
+    width: 100%;
+  }
+
+  .tableWrap {
+    overflow-x: auto;
+  }
+
+  table {
+    min-width: 900px;
+  }
+}

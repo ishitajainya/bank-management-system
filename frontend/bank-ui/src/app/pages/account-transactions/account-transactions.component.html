@@ -1,0 +1,80 @@
+<div class="page-shell">
+<div class="page">
+
+  <div class="toolbar">
+    <div class="field">
+      <label>Account Number</label>
+      <input
+        type="text"
+        [value]="accountNumber.value"
+        (input)="accountNumber.setValue($any($event.target).value)"
+        placeholder="e.g., YMSLI70240E49"
+      />
+      <small class="hint" *ngIf="accountNumber.invalid">Account number is required.</small>
+    </div>
+
+    <div class="field size">
+      <label>Page Size</label>
+      <select [value]="size" (change)="size = +$any($event.target).value; page = 0; fetch()">
+        <option [value]="5">5</option>
+        <option [value]="10">10</option>
+        <option [value]="20">20</option>
+        <option [value]="50">50</option>
+      </select>
+    </div>
+
+    <button class="btn-search" (click)="onSearch()" [disabled]="loading">Search</button>
+
+  </div>
+
+  <div class="status">
+    <span *ngIf="loading">Loading...</span>
+    <span class="error" *ngIf="errorMsg">{{ errorMsg }}</span>
+  </div>
+
+  <div class="tableWrap" *ngIf="!loading">
+    <table *ngIf="transactions.length > 0; else noData">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Account</th>
+          <th>Type</th>
+          <th class="right">Amount</th>
+          <th>Status</th>
+          <th>Created At</th>
+          <th>Performed By</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let t of transactions; trackBy: trackById">
+          <td>{{ t.id }}</td>
+          <td>{{ t.accountNumber }}</td>
+          <td>{{ t.transactionType }}</td>
+          <td class="right">{{ t.amount | number : '1.2-2' }}</td>
+          <td>
+            <span class="pill" [class.ok]="t.status === 'COMPLETED'"
+              [class.bad]="t.status === 'FAILED' || t.status === 'REJECTED' || t.status === 'DECLINED'"
+              [class.warn]="t.status === 'PENDING'">
+              {{ t.status }}
+            </span>
+          </td>
+          <td>{{ formatDate(t.createdAt) }}</td>
+          <td>{{ t.performedBy || '-' }}</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <ng-template #noData>
+      <div class="empty">No transactions found.</div>
+    </ng-template>
+  </div>
+
+  <div class="pager" *ngIf="totalPages > 0">
+    <button (click)="prevPage()" [disabled]="loading || page === 0">Prev</button>
+    <span>Page {{ page + 1 }} of {{ totalPages }} ({{ totalElements }} total)</span>
+    <button (click)="nextPage()" [disabled]="loading || page + 1 >= totalPages">Next</button>
+  </div>
+</div>
+
+</div>

@@ -1,93 +1,120 @@
-<div class="container mt-4">
-  <div class="d-flex justify-content-between align-items-center mb-3">
-    <div>
-      <h3 class="mb-0">{{ greeting }}, {{ username }} 👋</h3>
-      <small class="text-muted">Manager Dashboard – Pending approvals & monitoring</small>
+<div class="page-shell">
+  <!-- Top bar -->
+  <header class="topbar">
+    <div class="topbar-left">
+      <div>
+        <div class="title">{{ greeting }}, {{ username }}.</div>
+        <div class="subtitle">Manager Dashboard — Pending approvals & monitoring</div>
+      </div>
     </div>
+  </header>
 
-    <button class="btn btn-outline-secondary btn-sm" (click)="logout()">Logout</button>
-  </div>
+  <main class="grid">
+    <!-- Pending approvals -->
+    <section class="card">
+      <div class="card-head">
+        <h2>Pending Withdrawal Approvals</h2>
+        <p>Approve or reject withdrawals above ₹2,00,000.</p>
+      </div>
 
-  <div class="alert alert-danger" *ngIf="error">{{ error }}</div>
-  <div class="alert alert-success" *ngIf="success">{{ success }}</div>
+      <!-- Alerts -->
+      <p *ngIf="error" class="alert error" role="alert">{{ error }}</p>
+      <p *ngIf="success" class="alert success" role="status">{{ success }}</p>
 
-  <div class="card p-3">
-    <div class="d-flex justify-content-between align-items-center mb-2">
-      <h5 class="mb-0">Pending Withdrawal Approvals</h5>
-      <span class="text-muted">Total: {{ totalElements }}</span>
-    </div>
+      <div class="meta-row">
+        <span class="meta">Total pending: <b>{{ totalElements }}</b></span>
+        <button class="btn ghost" type="button" (click)="loadPending()" [disabled]="isLoading">
+          {{ isLoading ? 'Refreshing…' : 'Refresh' }}
+        </button>
+      </div>
 
-    <div *ngIf="isLoading" class="text-muted">Loading…</div>
+      <!-- Loading/Empty -->
+      <div *ngIf="isLoading" class="muted">Loading…</div>
 
-    <div *ngIf="!isLoading && approvals.length === 0" class="text-muted">
-      No pending approvals 
-    </div>
+      <div *ngIf="!isLoading && approvals.length === 0" class="muted">
+        No pending approvals.
+      </div>
 
-    <div class="table-responsive" *ngIf="!isLoading && approvals.length > 0">
-      <table class="table table-sm align-middle">
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Account</th>
-            <th>Amount</th>
-            <th>Created At</th>
-            <th>Status</th>
-            <th style="width: 220px;">Action</th>
-          </tr>
-        </thead>
+      <!-- Table -->
+      <div class="table-wrap" *ngIf="!isLoading && approvals.length > 0">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Account</th>
+              <th>Amount</th>
+              <th>Created At</th>
+              <th>Status</th>
+              <th style="width: 240px;">Action</th>
+            </tr>
+          </thead>
 
-        <tbody>
-          <tr *ngFor="let tx of approvals">
-            <td>#{{ tx.id }}</td>
-            <td>{{ tx.accountNumber }}</td>
-            <td>₹{{ tx.amount }}</td>
-            <td>{{ tx.createdAt || tx.createdAtDateTime || '-' }}</td>
-            <td>
-              <span class="badge bg-warning text-dark">{{ tx.status }}</span>
-            </td>
-            <td>
-              <div class="d-flex gap-2">
-                <button
-                  class="btn btn-success btn-sm"
-                  (click)="approve(tx.id)"
-                  [disabled]="actionLoadingId === tx.id"
-                >
-                  {{ actionLoadingId === tx.id ? 'Approving…' : 'Approve' }}
-                </button>
+          <tbody>
+            <tr *ngFor="let tx of approvals">
+              <td>#{{ tx.id }}</td>
+              <td class="mono">{{ tx.accountNumber }}</td>
+              <td>₹{{ tx.amount }}</td>
+              <td>{{ tx.createdAt || tx.createdAtDateTime || '-' }}</td>
+              <td>
+                <span class="pill warn">{{ tx.status }}</span>
+              </td>
+              <td>
+                <div class="actions">
+                  <button
+                    class="btn primary"
+                    type="button"
+                    (click)="approve(tx.id)"
+                    [disabled]="actionLoadingId === tx.id"
+                  >
+                    {{ actionLoadingId === tx.id ? 'Approving…' : 'Approve' }}
+                  </button>
 
-                <button
-                  class="btn btn-danger btn-sm"
-                  (click)="reject(tx.id)"
-                  [disabled]="actionLoadingId === tx.id"
-                >
-                  {{ actionLoadingId === tx.id ? 'Rejecting…' : 'Reject' }}
-                </button>
-              </div>
-            </td>
-          </tr>
-        </tbody>
+                  <button
+                    class="btn danger"
+                    type="button"
+                    (click)="reject(tx.id)"
+                    [disabled]="actionLoadingId === tx.id"
+                  >
+                    {{ actionLoadingId === tx.id ? 'Rejecting…' : 'Reject' }}
+                  </button>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
 
-      </table>
-    </div>
+      <!-- Pagination -->
+      <div class="pager" *ngIf="totalPages > 1">
+        <button class="btn ghost" type="button" (click)="prevPage()" [disabled]="page === 0">
+          Prev
+        </button>
 
-    <!-- Pagination -->
-    <div class="d-flex justify-content-between align-items-center mt-2" *ngIf="totalPages > 1">
-      <button class="btn btn-outline-primary btn-sm" (click)="prevPage()" [disabled]="page === 0">
-        Prev
-      </button>
+        <span class="muted">Page {{ page + 1 }} of {{ totalPages }}</span>
 
-      <span class="text-muted">
-        Page {{ page + 1 }} of {{ totalPages }}
-      </span>
+        <button
+          class="btn ghost"
+          type="button"
+          (click)="nextPage()"
+          [disabled]="page + 1 >= totalPages"
+        >
+          Next
+        </button>
+      </div>
+    </section>
 
-      <button
-        class="btn btn-outline-primary btn-sm"
-        (click)="nextPage()"
-        [disabled]="page + 1 >= totalPages"
-      >
-        Next
-      </button>
-    </div>
-  </div>
+    <!-- Right info panel -->
+    <aside class="card subtle">
+      <div class="card-head">
+        <h2>Manager checklist</h2>
+        <p>Quick verification before approving.</p>
+      </div>
+
+      <ul class="tips">
+        <li><span class="dot"></span>Verify identity and supporting documents.</li>
+        <li><span class="dot"></span>Confirm available balance and transaction history.</li>
+        <li><span class="dot"></span>Use clear remarks for audit traceability.</li>
+      </ul>
+    </aside>
+  </main>
 </div>
-

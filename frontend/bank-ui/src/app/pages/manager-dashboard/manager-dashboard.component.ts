@@ -128,8 +128,15 @@ export class ManagerDashboardComponent implements OnInit {
       });
   }
   logout() {
-    this.auth.logout(); 
+    this.auth.logout();
     this.router.navigate(['/login'], { replaceUrl: true });
   }
+  goToCreateClerk() {
+    this.router.navigate(['/manager/create-clerk']);
+  }
+  goToCreateAccount() {
+    this.router.navigate(['/manager/create-account']);
+  }
+
 
 }

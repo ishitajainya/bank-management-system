@@ -2,22 +2,20 @@
   <!-- Top bar -->
   <header class="topbar">
     <div class="topbar-left">
-      <div class="appmark" aria-hidden="true">Y</div>
       <div>
-        <div class="title">Clerk Dashboard</div>
-        <div class="subtitle">Manage customer transactions</div>
-        <div class="title">{{ greeting }}, {{ username }} 👋</div>
-
+        <div class="title">{{ greeting }}, {{ username }}.</div>
+         <div class="subtitle">Clerk Dashboard  — Manage customer transactions</div>
       </div>
     </div>
 
-    <button class="btn ghost" type="button" (click)="logout()">
-      Logout
-    </button>
+
   </header>
 
-  <!-- Main card -->
-  <main class="grid">
+  <!-- Child routes render here -->
+  <router-outlet></router-outlet>
+
+  <!-- Default view shown only on /clerk (not on /clerk/transactions) -->
+  <main class="grid" *ngIf="isClerkHomeRoute">
     <section class="card">
       <div class="card-head">
         <h2>Transaction</h2>
@@ -84,7 +82,7 @@
       </form>
     </section>
 
-    <!-- Right side info card (optional but looks pro) -->
+    <!-- Right side info card -->
     <aside class="card subtle">
       <div class="card-head">
         <h2>Quick tips</h2>
@@ -92,18 +90,9 @@
       </div>
 
       <ul class="tips">
-        <li>
-          <span class="dot"></span>
-          Verify the account number before submitting.
-        </li>
-        <li>
-          <span class="dot"></span>
-          Confirm amount with the customer out loud.
-        </li>
-        <li>
-          <span class="dot"></span>
-          Withdrawals may fail if balance is insufficient.
-        </li>
+        <li><span class="dot"></span> Verify the account number before submitting.</li>
+        <li><span class="dot"></span> Confirm amount with the customer out loud.</li>
+        <li><span class="dot"></span> Withdrawals may fail if balance is insufficient.</li>
       </ul>
     </aside>
   </main>

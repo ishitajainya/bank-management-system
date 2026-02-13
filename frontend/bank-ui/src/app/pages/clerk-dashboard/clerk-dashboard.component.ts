@@ -1,8 +1,9 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, RouterModule, NavigationEnd } from '@angular/router';
 import { finalize } from 'rxjs/operators';
+import { filter } from 'rxjs/operators';
 
 import { TransactionsService } from '../../services/transactions.service';
 import { AuthService } from '../../services/auth.service';
@@ -10,7 +11,7 @@ import { AuthService } from '../../services/auth.service';
 @Component({
   selector: 'app-clerk-dashboard',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, RouterModule], // ✅ add RouterModule
   templateUrl: './clerk-dashboard.component.html',
   styleUrls: ['./clerk-dashboard.component.css'],
 })
@@ -28,13 +29,16 @@ export class ClerkDashboardComponent implements OnInit, OnDestroy {
   isLoading = false;
   activeAction: 'deposit' | 'withdraw' | null = null;
 
+  // ✅ used by *ngIf in your HTML
+  isClerkHomeRoute = true;
+
   private greetingTimerId: any = null;
 
   constructor(
     private txService: TransactionsService,
     private auth: AuthService,
     private router: Router
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     // ✅ show username in UI (stored at login time)
@@ -45,6 +49,14 @@ export class ClerkDashboardComponent implements OnInit, OnDestroy {
 
     // ✅ optional: refresh greeting every minute (if time changes)
     this.greetingTimerId = setInterval(() => this.setGreeting(), 60_000);
+
+    // ✅ detect current route so form shows only on /clerk
+    this.isClerkHomeRoute = this.router.url === '/clerk';
+    this.router.events
+      .pipe(filter((e) => e instanceof NavigationEnd))
+      .subscribe(() => {
+        this.isClerkHomeRoute = this.router.url === '/clerk';
+      });
   }
 
   ngOnDestroy(): void {
@@ -59,13 +71,9 @@ export class ClerkDashboardComponent implements OnInit, OnDestroy {
   private setGreeting() {
     const hour = new Date().getHours();
 
-    if (hour < 12) {
-      this.greeting = 'Good Morning';
-    } else if (hour < 17) {
-      this.greeting = 'Good Afternoon';
-    } else {
-      this.greeting = 'Good Evening';
-    }
+    if (hour < 12) this.greeting = 'Good Morning';
+    else if (hour < 17) this.greeting = 'Good Afternoon';
+    else this.greeting = 'Good Evening';
   }
 
   private validate(): boolean {
@@ -146,9 +154,7 @@ export class ClerkDashboardComponent implements OnInit, OnDestroy {
   }
 
   logout() {
-    this.auth.logout(); // removes token, role, username
+    this.auth.logout();
     this.router.navigate(['/login'], { replaceUrl: true });
   }
-
-
 }

@@ -1,0 +1,45 @@
+<nav class="navbar">
+  <!-- LEFT: Logo always visible -->
+  <div class="nav-left">
+    <div class="logo">Y</div>
+    <span class="brand">Yamaha Bank</span>
+  </div>
+
+  <!-- CENTER: links ONLY if NOT login page -->
+  <div class="nav-links" *ngIf="!isLoginPage">
+    <!-- Clerk -->
+    <ng-container *ngIf="role === 'ROLE_CLERK'">
+      <a routerLink="/clerk" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+        Initiate Transaction
+      </a>
+      <a routerLink="/clerk/transactions" routerLinkActive="active">
+        Transactions
+      </a>
+    </ng-container>
+
+    <!-- Manager -->
+    <ng-container *ngIf="role === 'ROLE_MANAGER'">
+      <a routerLink="/manager" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+        Dashboard
+      </a>
+      <a routerLink="/manager/create-clerk" routerLinkActive="active">
+        Staff Administration
+      </a>
+      <a routerLink="/manager/create-account" routerLinkActive="active">
+        Create Bank Account
+      </a>
+      <a routerLink="/manager/transactions" routerLinkActive="active">
+        Transactions
+      </a>
+      <a routerLink="/manager/accounts" routerLinkActive="active">
+        Accounts
+      </a>
+
+    </ng-container>
+  </div>
+
+  <!-- RIGHT: logout ONLY if NOT login page -->
+  <div class="nav-right" *ngIf="!isLoginPage">
+    <button (click)="logout()">Sign out</button>
+  </div>
+</nav>

@@ -1,0 +1,88 @@
+<div class="page-shell">
+  <header class="topbar">
+    <div class="topbar-left">
+      <div>
+        <div class="title">{{ greeting }}, {{ managerUsername }} 👋</div>
+        <div class="subtitle">Create a new Clerk user</div>
+      </div>
+    </div>
+
+  </header>
+
+  <main class="grid">
+    <section class="card">
+      <div class="card-head">
+        <h2>Create Clerk</h2>
+        <p>Only managers can create clerk accounts.</p>
+      </div>
+
+      <form class="form" #f="ngForm" (ngSubmit)="createClerk()" novalidate>
+        <label class="field">
+          <span class="label">Clerk Username</span>
+          <input
+            type="text"
+            name="username"
+            [(ngModel)]="username"
+            required
+            placeholder="e.g. clerk7"
+            autocomplete="off"
+          />
+        </label>
+
+        <label class="field">
+          <span class="label">Password</span>
+          <div class="password-wrap">
+            <input
+              [type]="showPassword ? 'text' : 'password'"
+              name="password"
+              [(ngModel)]="password"
+              required
+              minlength="6"
+              placeholder="Minimum 6 characters"
+              autocomplete="new-password"
+            />
+            <button
+              type="button"
+              class="icon-btn"
+              (click)="showPassword = !showPassword"
+            >
+              {{ showPassword ? 'Hide' : 'Show' }}
+            </button>
+          </div>
+        </label>
+
+        <label class="field">
+          <span class="label">Confirm Password</span>
+          <input
+            [type]="showPassword ? 'text' : 'password'"
+            name="confirmPassword"
+            [(ngModel)]="confirmPassword"
+            required
+            placeholder="Re-enter password"
+            autocomplete="new-password"
+          />
+        </label>
+
+        <button class="btn primary" type="submit" [disabled]="f.invalid || isLoading">
+          {{ isLoading ? 'Creating…' : 'Create Clerk' }}
+        </button>
+
+        <p *ngIf="error" class="alert error" role="alert">{{ error }}</p>
+        <p *ngIf="success" class="alert success" role="status">{{ success }}</p>
+      </form>
+    </section>
+
+    <aside class="card subtle">
+      <div class="card-head">
+        <h2>Notes</h2>
+        <p>Suggested policy</p>
+      </div>
+      <ul class="tips">
+        <li><span class="dot"></span>Use unique usernames (no spaces).</li>
+        <li><span class="dot"></span>Set a strong password and share securely.</li>
+        <li><span class="dot"></span>Clerk can only do deposit/withdraw per rules.</li>
+      </ul>
+    </aside>
+  </main>
+</div>
+

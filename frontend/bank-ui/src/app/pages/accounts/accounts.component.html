@@ -1,0 +1,48 @@
+<div class="page">
+    <div class="page-shell">
+        <div class="status">
+            <span *ngIf="loading">Loading accounts…</span>
+            <span class="error" *ngIf="!loading && error">{{ error }}</span>
+            <span *ngIf="!loading && !error">Total: {{ totalElements }}</span>
+        </div>
+
+        <div class="tableWrap">
+            <table *ngIf="accounts.length > 0; else emptyState">
+                <thead>
+                    <tr>
+                        <th>Account No.</th>
+                        <th>Holder Name</th>
+                        <th class="numeric">Balance</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr *ngFor="let a of accounts">
+                        <td class="mono">{{ a.accountNumber }}</td>
+                        <td>{{ a.holderName }}</td>
+                        <td class="numeric">
+                            {{ a.balance | number:'1.2-2' }}
+                        </td>
+                    </tr>
+                </tbody>
+
+            </table>
+
+            <ng-template #emptyState>
+                <div class="empty">
+                    <div *ngIf="!loading && !error">No accounts found.</div>
+                    <div *ngIf="loading">Loading…</div>
+                </div>
+            </ng-template>
+        </div>
+
+        <div class="pager">
+            <span>Page {{ page + 1 }} of {{ totalPages || 1 }}</span>
+
+            <div class="pagerBtns">
+                <button (click)="prev()" [disabled]="loading || page === 0">Previous</button>
+                <button (click)="next()" [disabled]="loading || page + 1 >= totalPages">Next</button>
+            </div>
+        </div>
+    </div>
+</div>

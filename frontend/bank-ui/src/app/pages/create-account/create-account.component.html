@@ -1,0 +1,76 @@
+<div class="page-shell">
+  <header class="topbar">
+    <div class="topbar-left">
+      <div>
+        <div class="title">{{ greeting }}, {{ managerUsername }} 👋</div>
+        <div class="subtitle">Create a new bank account</div>
+      </div>
+    </div>
+
+  </header>
+
+  <main class="grid">
+    <section class="card">
+      <div class="card-head">
+        <h2>Create Bank Account</h2>
+        <p>Only managers can create new customer accounts.</p>
+      </div>
+
+      <form class="form" #f="ngForm" (ngSubmit)="createAccount()" novalidate>
+        <label class="field">
+          <span class="label">Account Holder Name</span>
+          <input
+            type="text"
+            name="holderName"
+            [(ngModel)]="holderName"
+            required
+            placeholder="e.g. Ishita Jain"
+            autocomplete="off"
+          />
+        </label>
+
+        <label class="field">
+          <span class="label">Opening Balance (₹)</span>
+          <input
+            type="number"
+            name="openingBalance"
+            [(ngModel)]="openingBalance"
+            min="0"
+            required
+            placeholder="0"
+          />
+        </label>
+
+        <button class="btn primary" type="submit" [disabled]="f.invalid || isLoading">
+          {{ isLoading ? 'Creating…' : 'Create Account' }}
+        </button>
+
+        <p *ngIf="error" class="alert error" role="alert">{{ error }}</p>
+
+        <p *ngIf="success" class="alert success" role="status">
+          {{ success }}
+          <span *ngIf="createdAccountNumber">
+            <br />
+            <b>New Account Number:</b> {{ createdAccountNumber }}
+            <button type="button" class="btn ghost inline" (click)="copyAccountNumber()">
+              Copy
+            </button>
+          </span>
+        </p>
+      </form>
+    </section>
+
+    <aside class="card subtle">
+      <div class="card-head">
+        <h2>Guidelines</h2>
+        <p>Before creating an account</p>
+      </div>
+
+      <ul class="tips">
+        <li><span class="dot"></span>Verify customer identity (KYC).</li>
+        <li><span class="dot"></span>Opening balance must be non-negative.</li>
+        <li><span class="dot"></span>Share account number securely.</li>
+      </ul>
+    </aside>
+  </main>
+</div>
