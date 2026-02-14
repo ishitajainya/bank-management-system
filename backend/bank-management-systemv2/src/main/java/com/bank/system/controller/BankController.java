@@ -21,7 +21,7 @@ public class BankController {
     private final ApprovalService approvalService;
     private final UserService userService;
 
-   //create accounts
+   //create accounts (mgr is logged in)
 
     @PreAuthorize("hasRole('MANAGER')")
     @PostMapping("/accounts")
@@ -33,6 +33,9 @@ public class BankController {
                 .body(accountService.createAccount(request));
     }
 
+    
+    //mgr can view all bank accounts
+    
     @PreAuthorize("hasRole('MANAGER')")
     @GetMapping("/accounts")
     public ResponseEntity<Page<CreateAccountResponse>> listAccounts(Pageable pageable) {
