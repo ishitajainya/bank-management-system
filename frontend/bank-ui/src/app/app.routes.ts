@@ -1,17 +1,25 @@
 import { Routes } from '@angular/router';
+
 import { LoginComponent } from './pages/login/login.component';
+import { TermsComponent } from './pages/terms/terms.component';
+
 import { ManagerDashboardComponent } from './pages/manager-dashboard/manager-dashboard.component';
 import { ClerkDashboardComponent } from './pages/clerk-dashboard/clerk-dashboard.component';
+
 import { CreateClerkComponent } from './pages/create-clerk/create-clerk.component';
 import { CreateAccountComponent } from './pages/create-account/create-account.component';
 import { AccountsComponent } from './pages/accounts/accounts.component';
 import { AccountTransactionsComponent } from './pages/account-transactions/account-transactions.component';
+
 import { roleGuard } from './guards/role.guard';
 
 export const routes: Routes = [
+
   { path: '', redirectTo: 'login', pathMatch: 'full' },
 
   { path: 'login', component: LoginComponent },
+  { path: 'terms', component: TermsComponent },   
+
 
   {
     path: 'manager',
@@ -25,12 +33,13 @@ export const routes: Routes = [
       { path: 'accounts', component: AccountsComponent },
       { path: 'transactions', component: AccountTransactionsComponent }
     ]
-  }
-  ,
+  },
+
 
   {
     path: 'clerk',
     canActivate: [roleGuard],
+    canActivateChild: [roleGuard],   // ✅ Added child guard for consistency
     data: { roles: ['ROLE_CLERK'] },
     children: [
       { path: '', component: ClerkDashboardComponent },
@@ -38,5 +47,9 @@ export const routes: Routes = [
     ]
   },
 
+
+  /* ================= FALLBACK ================= */
+
   { path: '**', redirectTo: 'login' }
+
 ];

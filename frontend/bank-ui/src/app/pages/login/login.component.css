@@ -73,6 +73,24 @@
   justify-content: center;
 
 }
+input::-ms-reveal,
+input::-ms-clear {
+  display: none;
+}
+
+input[type="password"]::-webkit-credentials-auto-fill-button {
+  visibility: hidden;
+}
+.error-banner {
+  margin-top: 12px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  border: 1px solid #ffd1d1;
+  background: #fff3f3;
+  color: #8a1f1f;
+  font-size: 14px;
+  line-height: 1.4;
+}
 
 
 .brand-text h1 {

@@ -10,7 +10,7 @@
     <!-- Clerk -->
     <ng-container *ngIf="role === 'ROLE_CLERK'">
       <a routerLink="/clerk" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
-        Initiate Transaction
+        New Transaction
       </a>
       <a routerLink="/clerk/transactions" routerLinkActive="active">
         Transactions
@@ -26,7 +26,7 @@
         Staff Administration
       </a>
       <a routerLink="/manager/create-account" routerLinkActive="active">
-        Create Bank Account
+        Customer Accounts
       </a>
       <a routerLink="/manager/transactions" routerLinkActive="active">
         Transactions
@@ -42,4 +42,5 @@
   <div class="nav-right" *ngIf="!isLoginPage">
     <button (click)="logout()">Sign out</button>
   </div>
+
 </nav>

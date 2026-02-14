@@ -1,0 +1,85 @@
+:host {
+  display: block;
+  font-family: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial,
+    "Apple Color Emoji", "Segoe UI Emoji";
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: #111827;
+}
+
+.terms-shell {
+   min-height: 100vh;
+  padding: 22px;
+  background:
+    radial-gradient(1200px 650px at 15% 10%, rgba(59, 130, 246, 0.08), transparent 60%),
+    radial-gradient(900px 520px at 90% 20%, rgba(16, 185, 129, 0.07), transparent 55%),
+    linear-gradient(180deg, #f6f8fb, #eef2f7);
+  color: #111827;
+}
+
+.terms-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+
+.logo {
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  display: grid;
+  place-items: center;
+  font-weight: 900;
+  background: rgba(15, 23, 42, 0.08);
+}
+
+h1 {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 900;
+}
+
+.muted {
+  color: rgba(15, 23, 42, 0.62);
+  font-size: 13px;
+  margin: 4px 0 0;
+}
+
+.back {
+  text-decoration: none;
+  font-weight: 800;
+  color: #111827;
+}
+
+.card {
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  border-radius: 16px;
+  box-shadow: 0 12px 30px rgba(15, 23, 42, 0.08);
+  padding: 16px;
+}
+
+.card h2 {
+  margin: 14px 0 6px;
+  font-size: 16px;
+  font-weight: 900;
+}
+
+.card p {
+  margin: 0;
+  line-height: 1.5;
+  color: rgba(15, 23, 42, 0.85);
+}
+
+.foot {
+  margin-top: 14px;
+}

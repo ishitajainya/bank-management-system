@@ -15,7 +15,7 @@ export class NavbarComponent implements OnDestroy {
   role: string | null = null;
   username: string | null = null;
   isLoginPage = false;
-
+  isAuthenticated = false;
   private sub = new Subscription();
 
   constructor(private auth: AuthService, private router: Router) {
@@ -35,7 +35,9 @@ export class NavbarComponent implements OnDestroy {
     // Initial check (important on page refresh)
     this.isLoginPage = this.router.url === '/login';
   }
-
+  ngOnInit() {
+    this.isAuthenticated = !!localStorage.getItem('token'); 
+  }
   logout() {
     this.auth.logout();
     this.router.navigate(['/login'], { replaceUrl: true });
